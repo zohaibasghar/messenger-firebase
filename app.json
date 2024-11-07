@@ -18,10 +18,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.approcket.messengerapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "expo-build-properties"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ab6a0770-b0d3-4543-9369-73b4569855b8"
+      }
     }
   }
 }

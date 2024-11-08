@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useAppSelector } from "../store/store";
 import Inbox from "../screens/Home/Inbox";
+import ChatScreen from "../screens/Home/ChatScreen";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ export default function HomeStack() {
         }}
       />
       <Stack.Screen name="Inbox" component={Inbox} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
     </Stack.Navigator>
   );
 }

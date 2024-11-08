@@ -8,20 +8,18 @@ import LatestMsg from "../../components/LatestMsg";
 
 const Dashboard = () => {
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.section}>
-          <Today />
-          <CalendarEvents />
-        </View>
-        <View style={styles.section}>
-          <Weather />
-        </View>
-        <View style={styles.section}>
-          <LatestMsg />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView contentContainerStyle={{ paddingTop: 16 }}>
+      <View style={[styles.section, { paddingVertical: 12 }]}>
+        <Today />
+        <CalendarEvents />
+      </View>
+      <View style={styles.section}>
+        <Weather />
+      </View>
+      <View style={styles.section}>
+        <LatestMsg />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -29,7 +27,7 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   section: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 8,
     marginBottom: 12,

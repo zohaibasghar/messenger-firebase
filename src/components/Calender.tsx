@@ -82,22 +82,12 @@ const CalendarEvents = () => {
 export default CalendarEvents;
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
   eventItem: {
-    marginBottom: 15,
     padding: 16,
     borderRadius: 8,
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
     gap: 24,
-  },
-  eventTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

@@ -6,7 +6,7 @@ import AppButton from "../../components/AppButton";
 import { globalStyles } from "../../../styles";
 import { useAppDispatch } from "../../store/store";
 import { loginUser } from "../../store/slices/user.slice";
-
+import firestore from "@react-native-firebase/firestore";
 const LoginScreen = () => {
   const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(false);
@@ -21,8 +21,20 @@ const LoginScreen = () => {
     try {
       await auth()
         .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          dispatch(loginUser(res.user));
+        .then(async (res) => {
+          await firestore()
+            .collection("users")
+            .doc(res.user.uid)
+            .set({
+              email: res.user.email,
+              emailVerified: res.user.emailVerified,
+              displayName: res.user.displayName,
+              isAnonymous: res.user.isAnonymous,
+              photoURL: res.user.photoURL,
+              providerId: res.user.providerId,
+              uid: res.user.uid,
+            })
+            .catch((err) => console.log(err));
         })
         .catch((error) => {
           if (error.code === "auth/email-already-in-use") {

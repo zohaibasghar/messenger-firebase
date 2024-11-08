@@ -13,7 +13,6 @@ export default function Main() {
   const [user, setUser] = useState(null);
   const dispatch = useAppDispatch();
 
-  // Handle user state changes
   function onAuthStateChanged(user: any) {
     setUser(user);
     dispatch(loginUser(user));

@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import firebase from "@react-native-firebase/app";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { PermissionsAndroid, StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Main from "./src/Main";
 import { useEffect } from "react";
@@ -23,6 +23,7 @@ export default function App() {
       } else {
         firebase.app();
       }
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS)
     })();
   }, []);
 
@@ -31,7 +32,7 @@ export default function App() {
       <NavigationContainer>
         <View style={styles.container}>
           <Main />
-          <StatusBar style="auto" />
+          <StatusBar style="dark" />
         </View>
       </NavigationContainer>
     </Provider>

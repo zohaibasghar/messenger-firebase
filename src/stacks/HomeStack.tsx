@@ -4,12 +4,9 @@ import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
 import { useAppSelector } from "../store/store";
+import Inbox from "../screens/Home/Inbox";
 
-export type HomeStackType = {
-  Dashboard: JSX.Element;
-};
-
-const Stack = createStackNavigator<HomeStackType>();
+const Stack = createStackNavigator();
 
 export default function HomeStack() {
   const { user } = useAppSelector((state) => state.user);
@@ -36,6 +33,7 @@ export default function HomeStack() {
           ),
         }}
       />
+      <Stack.Screen name="Inbox" component={Inbox} />
     </Stack.Navigator>
   );
 }

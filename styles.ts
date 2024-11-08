@@ -14,6 +14,7 @@ export const globalStyles = StyleSheet.create({
   hStack: {
     flexDirection: "row",
     gap: 8,
+    alignItems: "center",
   },
   vStack: {
     flexDirection: "column",
@@ -24,5 +25,10 @@ export const globalStyles = StyleSheet.create({
     width: "80%",
     textAlign: "center",
     marginHorizontal: "auto",
+  },
+  link: {
+    color: "blue",
+    textDecorationLine: "underline",
+    fontStyle: "italic",
   },
 });

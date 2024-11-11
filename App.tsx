@@ -1,19 +1,13 @@
 import "react-native-gesture-handler";
 import firebase from "@react-native-firebase/app";
 import { StatusBar } from "expo-status-bar";
-import { Alert, PermissionsAndroid, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Main from "./src/Main";
 import { useEffect } from "react";
-import { Provider } from "react-redux";
-import store from "./src/store/store";
 import messaging from "@react-native-firebase/messaging";
 
 export default function App() {
-  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    console.log("Message handled in the background!", remoteMessage);
-    Alert.alert("got new message", JSON.stringify(remoteMessage));
-  });
   useEffect(() => {
     (async () => {
       await messaging().registerDeviceForRemoteMessages();
@@ -29,21 +23,16 @@ export default function App() {
       } else {
         firebase.app();
       }
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-      );
     })();
   }, []);
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <View style={styles.container}>
-          <Main />
-          <StatusBar style="dark" />
-        </View>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Main />
+        <StatusBar style="dark" />
+      </View>
+    </NavigationContainer>
   );
 }
 

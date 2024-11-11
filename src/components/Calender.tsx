@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import * as Calendar from "expo-calendar";
 import { AntDesign } from "@expo/vector-icons";
 

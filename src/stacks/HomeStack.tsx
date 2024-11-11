@@ -3,14 +3,13 @@ import Dashboard from "../screens/Home/Dashboard";
 import { TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import auth from "@react-native-firebase/auth";
-import { useAppSelector } from "../store/store";
 import Inbox from "../screens/Home/Inbox";
 import ChatScreen from "../screens/Home/ChatScreen";
 
 const Stack = createStackNavigator();
 
 export default function HomeStack() {
-  const { user } = useAppSelector((state) => state.user);
+  const user = auth().currentUser;
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -18,7 +17,7 @@ export default function HomeStack() {
         name="Dashboard"
         options={{
           headerTitleAlign: "center",
-          headerTitle: user?.email,
+          headerTitle: user?.email as string,
           headerTitleStyle: { fontSize: 18 },
           headerRight: () => (
             <TouchableOpacity

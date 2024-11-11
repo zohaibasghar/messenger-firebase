@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { globalStyles } from "../../styles";
 import { useNavigation } from "@react-navigation/native";
 import firestore from "@react-native-firebase/firestore";
-import { useAppSelector } from "../store/store";
+import auth from "@react-native-firebase/auth";
+import { LatestMsgDTO } from "../types";
 
 const LatestMsg = () => {
   const { navigate }: any = useNavigation();
-  const { user } = useAppSelector((state) => state.user);
-  const [latestMsg, setLatestMsg] = useState<any>(null);
+  const user = auth().currentUser;
+  const [latestMsg, setLatestMsg] = useState<LatestMsgDTO | null>(null);
+
   useEffect(() => {
     const unsubscribe = firestore()
       .collection("latestMsg")
@@ -17,14 +19,14 @@ const LatestMsg = () => {
         (documentSnapshot) => {
           if (documentSnapshot.exists) {
             const msg = documentSnapshot.data();
-            setLatestMsg(msg);
+            setLatestMsg(msg as LatestMsgDTO);
             console.log("Latest Message:", msg);
           } else {
             console.log("No latest message found.");
           }
         },
         (error) => {
-          console.error("Error fetching latest message:", error);
+          console.log("Error fetching latest message:", error);
         }
       );
 

@@ -44,7 +44,7 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "#4D5382",
     borderRadius: 8,
     padding: 12,
     marginVertical: 4,
@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   disabled: {
-    backgroundColor: "skyblue",
+    backgroundColor: "#658E9C",
   },
 });

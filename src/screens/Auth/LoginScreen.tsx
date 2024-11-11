@@ -4,18 +4,18 @@ import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import AppButton from "../../components/AppButton";
 import { globalStyles } from "../../../styles";
-import { useAppDispatch } from "../../store/store";
-import { loginUser } from "../../store/slices/user.slice";
 import firestore from "@react-native-firebase/firestore";
+
 const LoginScreen = () => {
   const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const dispatch = useAppDispatch();
+
 
   const handleLogin = async () => {
+    
     setError("");
     setLoading(true);
     try {

@@ -3,19 +3,15 @@ import AuthStack from "./stacks/Auth";
 import HomeStack from "./stacks/HomeStack";
 import { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
-import { useAppDispatch } from "./store/store";
-import { loginUser } from "./store/slices/user.slice";
 
 const Stack = createStackNavigator();
 
 export default function Main() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
-  const dispatch = useAppDispatch();
 
   function onAuthStateChanged(user: any) {
     setUser(user);
-    dispatch(loginUser(user));
     if (initializing) setInitializing(false);
   }
 

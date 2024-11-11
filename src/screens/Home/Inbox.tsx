@@ -8,14 +8,15 @@ import {
   View,
 } from "react-native";
 import firestore from "@react-native-firebase/firestore";
-import { useAppSelector } from "../../store/store";
 import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../../../styles";
 import { Feather } from "@expo/vector-icons";
+import auth from "@react-native-firebase/auth"
+import { IUserDTO } from "../../types";
 
 export default function Inbox() {
-  const [users, setUsers] = useState<any[]>([]);
-  const { user } = useAppSelector((state) => state.user);
+  const [users, setUsers] = useState<IUserDTO[]>([]);
+  const user = auth().currentUser
   const { navigate } = useNavigation<any>();
   const [search, setSearch] = useState("");
 
@@ -25,14 +26,13 @@ export default function Inbox() {
       .where("email", "!=", user?.email)
       .onSnapshot(
         (querySnapshot) => {
-          console.log(querySnapshot.docs[0].data());
           const usersData = querySnapshot.docs.map((doc) => ({
             ...doc.data(),
           }));
-          setUsers(usersData);
+          setUsers(usersData as IUserDTO[]);
         },
         (error) => {
-          console.error("Error fetching users:", error);
+          console.log("Error fetching users:", error);
         }
       );
 

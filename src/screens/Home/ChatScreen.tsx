@@ -1,23 +1,30 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, IMessage } from "react-native-gifted-chat";
 import firestore from "@react-native-firebase/firestore";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useAppSelector } from "../../store/store";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import auth from "@react-native-firebase/auth";
+
+type RootStackParamList = {
+  Chat: { id: string };
+};
+
+type ChatRouteProp = RouteProp<RootStackParamList, "Chat">;
 
 export default function ChatScreen() {
-  const [messages, setMessages] = useState<any[]>([]);
-  const router: any = useRoute();
-  const { user } = useAppSelector((state) => state.user);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  const router = useRoute<ChatRouteProp>();
+  const user = auth().currentUser;
   console.log(messages);
+  console.log(messages[0]);
   useEffect(() => {
     const subscriber = firestore()
       .collection("chats")
-      .doc(router.params.id + user?.uid)
+      .doc(router.params?.id + user?.uid)
       .collection("messages")
       .orderBy("createdAt", "desc");
     const unsub = subscriber.onSnapshot((snap) => {
-      const allMsgs = snap.docs.map((msg) => {
+      const allMsgs: any = snap.docs.map((msg) => {
         const date = msg.data().createdAt;
         return {
           ...msg.data(),

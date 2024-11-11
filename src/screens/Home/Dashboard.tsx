@@ -1,7 +1,6 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import CalendarEvents from "../../components/Calender";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Today from "../../components/Today";
 import Weather from "../../components/Weather";
 import LatestMsg from "../../components/LatestMsg";

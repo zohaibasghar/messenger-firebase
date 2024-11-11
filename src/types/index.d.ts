@@ -12,3 +12,9 @@ export interface UserMetaData {
   creationTime: Date;
   lastSignInTime: Date;
 }
+
+export interface LatestMsgDTO {
+  receivedBy: string;
+  sendBy: string;
+  text: string;
+}

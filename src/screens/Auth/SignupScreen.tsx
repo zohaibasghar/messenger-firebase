@@ -3,8 +3,6 @@ import { View, TextInput, Text } from "react-native";
 import auth from "@react-native-firebase/auth";
 import { globalStyles } from "../../../styles";
 import AppButton from "../../components/AppButton";
-import { useAppDispatch } from "../../store/store";
-import { loginUser } from "../../store/slices/user.slice";
 import firestore from "@react-native-firebase/firestore";
 
 const SignupScreen = () => {
@@ -13,7 +11,7 @@ const SignupScreen = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const dispatch = useAppDispatch();
+
   const handleSignup = async () => {
     setError("");
     setLoading(true);
@@ -31,7 +29,6 @@ const SignupScreen = () => {
             uid: res.user.uid,
             name,
           });
-          dispatch(loginUser(res.user));
         })
         .finally(() => setLoading(false));
     } catch (err: any) {

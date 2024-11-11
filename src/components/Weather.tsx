@@ -9,8 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import * as Location from "expo-location";
-import axios from "axios";
-import { Ionicons, EvilIcons } from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import { globalStyles } from "../../styles";
 
 export default function App() {
@@ -21,18 +20,27 @@ export default function App() {
   const [weather, setWeather] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  function fetchWeather(lat: number | undefined, lng: number | undefined) {
+  async function fetchWeather(
+    lat: number | undefined,
+    lng: number | undefined
+  ) {
     setLoading(true);
-    lat && lng
-      ? axios
-          .get(
-            `http://api.weatherapi.com/v1/current.json?key=e46765c40ab8465c86c101528240811&q=${lat} ${lng}`
-          )
-          .then((res) => setWeather(res.data.current))
-          .catch((err) => console.log(err))
-          .finally(() => setLoading(false))
-      : setLoading(false);
+
+    await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=e46765c40ab8465c86c101528240811&q=${lat},${lng}`
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        setWeather(data);
+      })
+      .catch((err) => setErrorMsg(String(err)))
+      .finally(() => setLoading(false));
   }
+
+  useEffect(() => {
+    if (location)
+      fetchWeather(location?.coords.latitude, location?.coords.longitude);
+  }, [location]);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +52,6 @@ export default function App() {
       setLoading(true);
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      fetchWeather(location.coords.latitude, location.coords.longitude);
     })();
   }, []);
 
@@ -60,20 +67,21 @@ export default function App() {
       {text ? (
         <Text style={styles.paragraph}>{text}</Text>
       ) : (
-        <View>
+        <View style={globalStyles.vStack}>
           <Image
             source={{
-              uri: `https:${weather?.condition?.icon.replace(
+              uri: `https:${weather?.current?.condition?.icon.replace(
                 "64x64",
                 "128x128"
               )}`,
             }}
             width={124}
             height={124}
+            style={{ marginHorizontal: "auto" }}
           />
           <View style={[globalStyles.hStack, { justifyContent: "center" }]}>
             <Text style={{ fontSize: 20, fontWeight: "600" }}>
-              {weather?.temp_c} &deg;C
+              {weather?.current?.temp_c} &deg;C
             </Text>
             {loading ? (
               <ActivityIndicator />
@@ -90,6 +98,11 @@ export default function App() {
               </Pressable>
             )}
           </View>
+          <View style={[globalStyles.hStack, { justifyContent: "center" }]}>
+            <Entypo name="location-pin" size={24} color="black" />
+            <Text style={styles.text}>{weather?.location?.name},</Text>
+          </View>
+          <Text style={styles.text}>{weather?.location?.country}</Text>
         </View>
       )}
     </View>
@@ -106,5 +119,9 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 18,
     textAlign: "center",
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
